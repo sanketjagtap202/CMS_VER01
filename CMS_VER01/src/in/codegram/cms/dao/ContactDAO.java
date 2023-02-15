@@ -28,7 +28,7 @@ public interface ContactDAO {
 	List<Contact> findAll();
 
 	/**
-	 * This delete() ethod will delete a contact from DB based on id.
+	 * This delete() method will delete a contact from DB based on id.
 	 * 
 	 * @param id of the Contact to be deleted.
 	 */

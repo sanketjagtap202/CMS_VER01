@@ -29,7 +29,7 @@ public class ContactDAOImpl extends DBUtil implements ContactDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		finally {
 			closePreparedStatement();
 		}
@@ -38,16 +38,16 @@ public class ContactDAOImpl extends DBUtil implements ContactDAO {
 
 	@Override
 	public List<Contact> findAll() {
-		
-		String sql ="select * from contacts";
+
+		String sql = "select * from contacts";
 		PreparedStatement pstmt = prepareStatement(sql);
-		
+
 		List<Contact> contacts = new ArrayList<>();
 		Contact contact = null;
-		  try {
-			ResultSet rs =  pstmt.executeQuery();
-			
-			while(rs.next()) {
+		try {
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
 				contact = new Contact();
 				contact.setId(rs.getInt("id"));
 				contact.setName(rs.getString("name"));
@@ -65,14 +65,33 @@ public class ContactDAOImpl extends DBUtil implements ContactDAO {
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		String sqlDelete = "delete from contacts where id=?";
+		PreparedStatement ps = prepareStatement(sqlDelete);
+		try {
+			ps.setInt(1, id);
+			ps.execute();
 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override
 	public void update(Contact contact) {
-		// TODO Auto-generated method stub
+		String sqlUpdate = "update contacts SET name=?, email=?, address=? where id=?";
 
+		PreparedStatement ps = prepareStatement(sqlUpdate);
+		try {
+			ps.setString(1, contact.getName());
+			ps.setString(2, contact.getEmail());
+			ps.setString(3, contact.getAddress());
+			ps.setInt(4, contact.getId());
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 }
